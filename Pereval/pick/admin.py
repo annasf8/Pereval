@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Coords, Image, Level , Pereval
+from .models import User, Coords, Image, Level, Pereval
 
 admin.site.register(User)
 admin.site.register(Coords)

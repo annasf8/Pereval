@@ -81,7 +81,7 @@ class Image(models.Model):
         return f"{self.pk}: {self.title}"
 
     class Meta:
-        verbose_name = "pereval_images"
+        verbose_name = "Изображения"
 
 
 
