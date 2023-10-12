@@ -64,8 +64,8 @@ class PerevalSerializer(WritableNestedModelSerializer):
         images = validated_data.pop('images')
 
         # проверка уникальности пользователя
-        user = User.objects.filter(email=user['email'])
-        if user.exists():
+        pick_user = User.objects.filter(email=user['email'])
+        if pick_user.exists():
             user_serializer = UserSerializer(data=user)
             user_serializer.is_valid(raise_exception=True)
             user = user_serializer.save()
@@ -80,6 +80,7 @@ class PerevalSerializer(WritableNestedModelSerializer):
             data = image.pop('data')
             title = image.pop('title')
             Image.objects.create(data=data, pereval=pereval, title=title)
+
         return pereval
 
 
