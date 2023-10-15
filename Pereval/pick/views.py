@@ -49,3 +49,24 @@ class PerevalViewSet(viewsets.ModelViewSet):
                 'message': 'Ошибка подключения к базе данных',
                 'id': None,
             })
+    # редактирование объекта перевала, если статус все еще new и данные о самом пользователе не меняются.
+    def partial_update(self, request, *args, **kwargs):
+        pereval = self.get_object()
+        if pereval.status == 'new':
+            serializer = PerevalSerializer(pereval, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({
+                    'state': '1',
+                    'message': 'Запись успешно изменена'
+                })
+            else:
+                return Response({
+                    'state': '0',
+                    'message': serializer.errors
+                })
+        else:
+            return Response({
+                'state': '0',
+                'message': f"Не удалось обновить запись, так как сведения уже у модератора и имеют статус: {pereval.get_status_display()}"
+            })
