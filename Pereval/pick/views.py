@@ -1,8 +1,8 @@
+from django.http import JsonResponse
 from .serializers import *
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
 from .models import Pereval
-
 
 
 # от ModelViewSet все виды запросов
@@ -70,3 +70,16 @@ class PerevalViewSet(viewsets.ModelViewSet):
                 'state': '0',
                 'message': f"Не удалось обновить запись, так как сведения уже у модератора и имеют статус: {pereval.get_status_display()}"
             })
+
+# список данных обо всех объектах, которые пользователь с почтой <email> отправил на сервер.
+class EmailAPIView(generics.ListAPIView):
+    serializer_class = PerevalSerializer
+    def get(self, request, *args, **kwargs):
+        email = kwargs.get('email', None)
+        if Pereval.objects.filter(user__email=email):
+            data = PerevalSerializer(Pereval.objects.filter(user__email=email), many=True).data
+        else:
+            data = {
+                'message': f'Не существует пользователя с таким email - {email}'
+            }
+        return JsonResponse(data, safe=False)

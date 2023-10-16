@@ -54,9 +54,10 @@ class PerevalSerializer(WritableNestedModelSerializer):
     class Meta:
         model = Pereval
         fields = (
-             'id', 'beauty_title', 'title', 'other_titles', 'connect', 'add_time', 'user', 'coords', 'level', 'images','status')
+            'id', 'beauty_title', 'title', 'other_titles', 'connect', 'add_time', 'user', 'coords', 'level', 'images', 'status')
+        read_only_fields = ['status']
 
-    """Сохранение данных о перевале, полученных от пользователя"""
+    # Сохранение данных о перевале, полученных от пользователя
     def create(self, validated_data, **kwargs):
         user = validated_data.pop('user')
         coords = validated_data.pop('coords')
