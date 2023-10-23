@@ -107,16 +107,16 @@ class PerevalSerializerTestCase(TestCase):
                  height=1
              ),
              level=Level.objects.create(
-                 winter='1b',
-                 summer='',
-                 autumn='',
-                 spring=''
+                 winter="1b",
+                 summer="",
+                 autumn="",
+                 spring=""
              ),
          )
-         self.images_1 = Image.objects.create(
-             data="https://pereval-photo.ru/1.jpg",
-             title="Test1",
-             pereval=self.pereval_1
+         self.images_2 = Image.objects.create(
+            data="https://pereval-photo.ru/1.jpg",
+            title="Test1",
+            pereval=self.pereval_1
          )
 
          self.pereval_2 = Pereval.objects.create(
@@ -124,8 +124,8 @@ class PerevalSerializerTestCase(TestCase):
              beauty_title="Test2",
              title="Test2",
              other_titles="Test2",
-             connect='',
-             add_time= "",
+             connect="",
+             add_time="",
              user=User.objects.create(
                  email="test2@mail.ru",
                  fam="Test2",
@@ -139,40 +139,39 @@ class PerevalSerializerTestCase(TestCase):
                  height=2
              ),
              level=Level.objects.create(
-                 winter='2b',
-                 summer='',
-                 autumn='',
-                 spring=''
+                 winter="2b",
+                 summer="",
+                 autumn="",
+                 spring=""
              ),
          )
          self.images_2 = Image.objects.create(
-             data="https://pereval-photo.ru/2.jpg",
-             title="Test2",
-             pereval=self.pereval_2
+            data="https://pereval-photo.ru/2.jpg",
+            title="Test2",
+            pereval=self.pereval_2
          )
 
      def test_check(self):
          serializer_data = PerevalSerializer([self.pereval_1, self.pereval_2], many=True).data
-         json_data = json.dumps(serializer_data)
          expected_data = [
              {
-                 "id": self.pereval_1.id,
+                 "id": 1,
                  "beauty_title": "Test1",
                  "title": "Test1",
                  "other_titles": "Test1",
                  "connect": "",
                  "add_time": str(self.pereval_1.add_time),
                  "user": {
-                     "email": "test1@mail.ru",
-                     "fam": "Test1",
-                     "name": "Test1",
-                     "otc": "Test1",
-                     "phone": "111"
+                    "email": "test1@mail.ru",
+                    "fam": "Test1",
+                    "name": "Test1",
+                    "otc": "Test1",
+                    "phone": "111"
                  },
                  "coords": {
-                     "latitude": 1.0,
-                     "longitude": 1.0,
-                     "height": 1
+                    "latitude": 1.0,
+                    "longitude": 1.0,
+                    "height": 1
                  },
                  "level": {
                      "winter": "1b",
@@ -182,25 +181,25 @@ class PerevalSerializerTestCase(TestCase):
                  },
                  "images": [
                      {
-                         "data": "https://online-pereval.ru/1.jpg",
-                         "title": "Test1"
+                        "data": "https://pereval-photo.ru/1.jpg",
+                        "title": "Test1"
                      },
                  ],
                  "status": ""
              },
              {
-                 "id": self.pereval_2.id,
+                 "id": 2,
                  "beauty_title": "Test2",
                  "title": "Test2",
                  "other_titles": "Test2",
                  "connect": "",
                  "add_time": str(self.pereval_2.add_time),
                  "user": {
-                     "email": "test2@mail.ru",
-                     "fam": "Test2",
-                     "name": "Test2",
-                     "otc": "Test2",
-                     "phone": "222"
+                    "email": "test2@mail.ru",
+                    "fam": "Test2",
+                    "name": "Test2",
+                    "otc": "Test2",
+                    "phone": "222"
                  },
                  "coords": {
                      "latitude": 2.0,
@@ -215,13 +214,13 @@ class PerevalSerializerTestCase(TestCase):
                  },
                  "images": [
                      {
-                         "data": "https://online-pereval.ru/2.jpg",
-                         "title": "Test2"
+                        "data": "https://pereval-photo.ru/2.jpg",
+                        "title": "Test2"
                      },
                  ],
                  "status": ""
              }
          ]
-         print(expected_data)
-         print(json_data)
-         self.assertEqual(expected_data,json_data)
+         # print(expected_data)
+         # print(serializer_data)
+         self.assertEqual(expected_data,serializer_data)

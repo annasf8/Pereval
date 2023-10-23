@@ -54,7 +54,7 @@ class Pereval(models.Model):
     title = models.TextField(blank=True, null=True, verbose_name='Название вершины')
     other_titles = models.TextField(blank=True, null=True,verbose_name='Другое название' )
     connect = models.TextField(blank=True,verbose_name='Связывает', null=True)
-    add_time = models.TimeField(auto_now_add=True)
+    add_time = models.TimeField(auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
         return f"{self.pk}: {self.beauty_title}"
