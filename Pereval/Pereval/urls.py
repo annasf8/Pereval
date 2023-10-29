@@ -12,7 +12,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/submitData/', include(router.urls)),
-    path('api/submitData/user__email=<str:email>', EmailAPIView.as_view()),
+    path('api/submitData/user__email=<str:email>', EmailAPIView.as_view(), name='email-pereval'),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     # Optional UI:
     path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),

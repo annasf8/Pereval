@@ -4,6 +4,7 @@ from rest_framework import status
 from .serializers import PerevalSerializer
 from .models import *
 from django.urls import reverse
+from .views import EmailAPIView
 import json
 from datetime import datetime
 from django.utils import timezone
@@ -40,7 +41,7 @@ class PerevalTestCase(APITestCase):
             )
 
         self.pereval_2 = Pereval.objects.create(
-            user=User.objects.create(
+                user=User.objects.create(
                 email="test2@mail.ru",
                 fam="Test2",
                 name="Test2",
@@ -85,6 +86,12 @@ class PerevalTestCase(APITestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(serializer_data, response.json())
 
+    def test_get_by_email(self):
+        url = reverse('email-pereval', args=(self.pereval_1.user.email,))
+        response = self.client.get(url)
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+
+
 class PerevalSerializerTestCase(TestCase):
      def setUp(self):
          self.pereval_1 = Pereval.objects.create(
@@ -113,7 +120,7 @@ class PerevalSerializerTestCase(TestCase):
                  spring=""
              ),
          )
-         self.images_2 = Image.objects.create(
+         self.images_1 = Image.objects.create(
             data="https://pereval-photo.ru/1.jpg",
             title="Test1",
             pereval=self.pereval_1
@@ -224,3 +231,4 @@ class PerevalSerializerTestCase(TestCase):
          # print(expected_data)
          # print(serializer_data)
          self.assertEqual(expected_data,serializer_data)
+
