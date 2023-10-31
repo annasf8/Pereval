@@ -78,8 +78,10 @@ class EmailAPIView(generics.ListAPIView):
         email = kwargs.get('email', None)
         if Pereval.objects.filter(user__email=email):
             data = PerevalSerializer(Pereval.objects.filter(user__email=email), many=True).data
+            api_status = status.HTTP_200_OK
         else:
             data = {
                 'message': f'Не существует пользователя с таким email - {email}'
             }
-        return JsonResponse(data, safe=False)
+            api_status = 404
+        return JsonResponse(data, status=api_status, safe=False)
